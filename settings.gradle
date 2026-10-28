@@ -1,0 +1,35 @@
+// Resolves from the Gradle Plugin Portal and Maven Central.
+// To use a mirror instead, pass -PmirrorUrl=... (and optionally -PmirrorUser / -PmirrorPassword).
+pluginManagement {
+    repositories {
+        if (providers.gradleProperty("mirrorUrl").isPresent()) {
+            maven {
+                url = providers.gradleProperty("mirrorUrl").get()
+                credentials {
+                    username = providers.gradleProperty("mirrorUser").getOrNull()
+                    password = providers.gradleProperty("mirrorPassword").getOrNull()
+                }
+            }
+        } else {
+            gradlePluginPortal()
+        }
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        if (providers.gradleProperty("mirrorUrl").isPresent()) {
+            maven {
+                url = providers.gradleProperty("mirrorUrl").get()
+                credentials {
+                    username = providers.gradleProperty("mirrorUser").getOrNull()
+                    password = providers.gradleProperty("mirrorPassword").getOrNull()
+                }
+            }
+        } else {
+            mavenCentral()
+        }
+    }
+}
+
+rootProject.name = "micronaut-kafka-shutdown-reproducer"

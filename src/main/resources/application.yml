@@ -1,0 +1,8 @@
+micronaut:
+  application:
+    name: micronaut-kafka-shutdown-reproducer
+kafka:
+  consumers:
+    default:
+      key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value.deserializer: org.apache.kafka.common.serialization.StringDeserializer

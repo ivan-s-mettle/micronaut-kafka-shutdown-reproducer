@@ -1,0 +1,47 @@
+plugins {
+    id "java"
+    id "io.micronaut.minimal.application" version "5.0.2"
+}
+
+version = "0.1"
+group = "example"
+
+dependencies {
+    implementation "io.micronaut.kafka:micronaut-kafka"
+    implementation "io.micronaut.sql:micronaut-jdbc-hikari"
+    runtimeOnly "org.postgresql:postgresql"
+    runtimeOnly "ch.qos.logback:logback-classic"
+    runtimeOnly "org.yaml:snakeyaml"
+
+    testImplementation "org.testcontainers:testcontainers-kafka"
+    testImplementation "org.testcontainers:testcontainers-postgresql"
+    testImplementation "org.assertj:assertj-core"
+    testImplementation "org.awaitility:awaitility:4.3.0"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+application {
+    mainClass = "example.Application"
+}
+
+micronaut {
+    version = micronautVersion
+    runtime "none"
+    testRuntime "junit5"
+    processing {
+        incremental true
+        annotations "example.*"
+    }
+}
+
+test {
+    testLogging {
+        showStandardStreams = true
+        exceptionFormat = "full"
+    }
+    outputs.upToDateWhen { false }
+}
